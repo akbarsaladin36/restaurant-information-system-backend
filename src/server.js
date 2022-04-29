@@ -21,6 +21,7 @@ app.use(compression())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/backend10/api/v1', routerNavigation)
+app.use('/backend10/api', express.static('src/uploads'))
 
 connectDB()
 

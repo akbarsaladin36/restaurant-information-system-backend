@@ -26,6 +26,9 @@ const userSchema = new Schema(
         },
         phone_number: {
             type: String
+        },
+        avatar_image: {
+            type: String
         }
     },
     { 

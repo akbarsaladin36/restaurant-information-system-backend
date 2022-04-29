@@ -1,5 +1,6 @@
 const helper = require('../../helpers/helper')
 const usersModel = require('../auth/auth_model')
+const fs = require('fs')
 
 module.exports = {
     allUsers: async (req, res) => {
@@ -41,7 +42,20 @@ module.exports = {
                     first_name: userFirstName,
                     last_name: userLastName,
                     address: userAddress,
-                    phone_number: userPhoneNumber
+                    phone_number: userPhoneNumber,
+                    avatar_image: req.file ? req.file.filename : ''
+                }
+                if(checkUser) {
+                    if(checkUser) {
+                        const imageToDelete = checkUser.avatar_image
+                        const imageToExist = fs.existsSync(`src/uploads/${imageToDelete}`)
+
+                        if(imageToDelete && imageToExist) {
+                            fs.unlink(`src/uploads/${imageToDelete}`, (err) => {
+                                if (err) throw err
+                            })
+                        }
+                    }
                 }
                 const result = await usersModel.findOneAndUpdate({ _id: id }, setData)
                 return helper.response(res, 200, `A user data with id ${id} is succesfully updated!`, result)
@@ -58,6 +72,18 @@ module.exports = {
             if(!checkUser) {
                 return helper.response(res, 400, `A user data with id ${id} is not found! Please try again!`, null)
             } else {
+                if(checkUser) {
+                    if(checkUser) {
+                        const imageToDelete = checkUser.avatar_image
+                        const imageToExist = fs.existsSync(`src/uploads/${imageToDelete}`)
+
+                        if(imageToDelete && imageToExist) {
+                            fs.unlink(`src/uploads/${imageToDelete}`, (err) => {
+                                if (err) throw err
+                            })
+                        }
+                    }
+                }
                 const result = await usersModel.findOneAndRemove({ _id: id })
                 return helper.response(res, 200, `A user data with id ${id} is succesfully deleted!`, result)
             }
