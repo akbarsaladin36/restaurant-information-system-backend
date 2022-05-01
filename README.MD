@@ -25,7 +25,7 @@ This API is created by me to make backend for restaurant information system. Thi
 4. Turn on Mongodb can using MongoDB Atlas from website and Third-party tool like MongoDB Compass, etc.
 5. Open Postman desktop application or Chrome web app extension that has installed before
 6. Choose HTTP Method and enter request url.(ex. localhost:3000/)
-7. You can see all the end point [here](https://documenter.getpostman.com/view/14780095/UyrGAZQ6)
+7. You can see all the end point [here](https://documenter.getpostman.com/view/14780095/UyrGBuFM)
 8. Type `npm run dev` to activated the server.
 
 ## Set up .env file
