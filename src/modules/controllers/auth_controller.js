@@ -1,23 +1,23 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const helper = require('../../helpers/helper')
-const User = require('./auth_model')
-const authModel = require('./auth_model')
+const authModel = require('../models/User')
 
 module.exports = {
     register: async (req, res) => {
         try {
-            const { userName, userEmail, userPassword } = req.body
-            const checkEmail = await User.findOne({ email: userEmail })
+            const { userName, userEmail, userPassword, userRoles } = req.body
+            const checkEmail = await authModel.findOne({ email: userEmail })
             if(checkEmail) {
                 return helper.response(res, 400, 'Your email is registered on this website. Please try a new email!', null)
             } else {
                 const salt = bcrypt.genSaltSync(10)
                 const encryptPassword = bcrypt.hashSync(userPassword, salt)
-                const newUser = new User({
+                const newUser = new authModel({
                     username: userName,
                     email: userEmail,
-                    password: encryptPassword
+                    password: encryptPassword,
+                    roles: userRoles
                  })
                 const result = await newUser.save()
                 return helper.response(res, 200, 'New user is successfully created!', result)

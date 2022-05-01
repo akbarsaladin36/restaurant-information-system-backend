@@ -1,5 +1,5 @@
 const helper = require('../../helpers/helper')
-const usersModel = require('../auth/auth_model')
+const usersModel = require('../models/User')
 const fs = require('fs')
 
 module.exports = {
@@ -10,6 +10,32 @@ module.exports = {
                 return helper.response(res, 400, 'No users that registered in this website. Please make sure your user is registered!', null)
             } else {
                 return helper.response(res, 200, 'All users is showed successfully', result)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
+    allUsersByStaff: async (req, res) => {
+        try {
+            const result = await usersModel.find({ roles: 'staff' })
+            if(!result) {
+                return helper.response(res, 400, 'No staff that registered in this website, Please make sure your staff is register first!', null)
+            } else {
+                return helper.response(res, 200, 'All staff is showed successfully!', result)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
+    allUsersByBuyer: async (req, res) => {
+        try {
+            const result = await usersModel.find({ roles: 'buyer' })
+            if(!result) {
+                return helper.response(res, 400, 'No buyer that visited in this website, Please make sure your buyer is registered!', null)
+            } else {
+                return helper.response(res, 200, 'All buyer is showed succesfully!', result)
             }
         } catch (err) {
             console.log(err)
@@ -33,7 +59,7 @@ module.exports = {
     updateOneUser: async (req, res) => {
         try {
             const { id } = req.params
-            const { userFirstName, userLastName, userAddress, userPhoneNumber } = req.body
+            const { userFirstName, userLastName, userAddress, userPhoneNumber, userStatus, userGender, userReligion } = req.body
             const checkUser = await usersModel.findOne({ _id: id })
             if(!checkUser) {
                 return helper.response(res, 400, `A user data with id ${id} is not found! Please try again!`, null)
@@ -43,7 +69,10 @@ module.exports = {
                     last_name: userLastName,
                     address: userAddress,
                     phone_number: userPhoneNumber,
-                    avatar_image: req.file ? req.file.filename : ''
+                    avatar_image: req.file ? req.file.filename : '',
+                    status: userStatus,
+                    gender: userGender,
+                    religion: userReligion
                 }
                 if(checkUser) {
                     if(checkUser) {

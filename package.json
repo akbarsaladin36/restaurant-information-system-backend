@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-backend-boilerplate",
+  "name": "restaurant-information-system-backend",
   "version": "1.0.0",
-  "description": "Node.js Backend Boilerplate",
+  "description": "Restaurant Information System Backend",
   "main": "server.js",
   "scripts": {
     "dev": "npx nodemon ./src/server.js"

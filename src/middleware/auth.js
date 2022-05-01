@@ -24,11 +24,19 @@ module.exports = {
     }
   },
 
-//   isAdmin: (req, res, next) => {
-//     if (req.decodeToken.user_status === 'admin') {
-//       next()
-//     } else {
-//       return helper.response(res, 403, 'this page can be accessed by admin!')
-//     }
-//   }
+  isAdmin: (req, res, next) => {
+    if (req.decodeToken.roles === 'admin') {
+      next()
+    } else {
+      return helper.response(res, 403, 'this page can be accessed by admin!')
+    }
+  },
+
+  isStaff: (req, res, next) => {
+    if (req.decodeToken.roles === 'staff') {
+      next()
+    } else {
+      return helper.response(res, 403, 'this page can be accessed by staff!')
+    }
+  },
 }

@@ -29,6 +29,26 @@ const userSchema = new Schema(
         },
         avatar_image: {
             type: String
+        },
+        status: {
+            type: String,
+            enum: ['single', 'married', 'divorced', 'widowed'],
+            default: 'single'
+        },
+        gender : {
+            type: String,
+            enum: ['male', 'female'],
+            default: 'male'
+        },
+        religion: {
+            type: String,
+            enum: ['islam', 'kristen', 'hindu', 'buddha', 'lainnya'],
+            default: 'lainnya'
+        },
+        roles: {
+            type: String,
+            enum: ['admin', 'buyer', 'staff'],
+            default: 'buyer'
         }
     },
     { 
