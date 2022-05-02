@@ -38,8 +38,10 @@ module.exports = {
                 )
                 if(checkPassword) {
                     const payload = {
+                            _id: checkEmail._id,
                             username: checkEmail.username,
-                            email: checkEmail.email
+                            email: checkEmail.email,
+                            roles: checkEmail.roles
                     }
                     const token = jwt.sign({...payload}, process.env.JWT_SECRETKEY, {
                         expiresIn: process.env.JWT_EXPIRESTIME

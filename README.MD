@@ -44,6 +44,7 @@ JWT_EXPIRESTIME = <YOUR JWT EXPIRES TIME>
 
 1. Login and Register API
 2. CRUD Users API
+3. CRUD Product API
 
 ## License
 
