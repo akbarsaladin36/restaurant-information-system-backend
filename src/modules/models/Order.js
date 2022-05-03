@@ -8,7 +8,7 @@ const orderSchema = new Schema (
             required: true
         },
         order_qty: {
-            type: String,
+            type: Number,
             required: true
         },
         buyer_id: {
