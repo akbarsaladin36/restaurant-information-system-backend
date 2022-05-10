@@ -24,7 +24,7 @@ const productSchema = new Schema (
             enum: ['available', 'sold', 'coming soon'],
             default: 'available'
         },
-        staff_id: {
+        admin_id: {
             type: Schema.Types.ObjectId,
             ref: "User"
         }

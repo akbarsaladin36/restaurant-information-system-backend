@@ -54,7 +54,7 @@ module.exports = {
                     product_desc: productDesc,
                     product_price: productPrice,
                     product_qty: productQty,
-                    staff_id: req.decodeToken._id
+                    admin_id: req.decodeToken._id
                 })
                 const result = await newProduct.save()
                 return helper.response(res, 200, 'A new product is created succesfully!', result)
