@@ -8,6 +8,7 @@ router.get('/', authMiddleware.userAuthentication, authMiddleware.isAdmin, users
 router.get('/all-staffs', authMiddleware.userAuthentication, authMiddleware.isAdmin, usersController.allUsersByStaff)
 router.get('/all-buyers', authMiddleware.userAuthentication, authMiddleware.isStaff, usersController.allUsersByBuyer)
 router.get('/:id', authMiddleware.userAuthentication, usersController.oneUser)
+router.post('/', authMiddleware.userAuthentication, authMiddleware.isAdmin, usersController.createUser)
 router.patch('/:id', authMiddleware.userAuthentication, uploadFile, usersController.updateOneUser)
 router.delete('/:id', authMiddleware.userAuthentication, authMiddleware.isAdmin, usersController.deleteOneUser)
 
