@@ -3,13 +3,17 @@ const Schema = mongoose.Schema
 
 const paymentSchema = new Schema(
     {
+        payment_amount: {
+            type: Number,
+            required: true
+        },
         payment_description : {
             type: String,
-            required: true
         },
         payment_type: {
             type: String,
-            required: true
+            enum: ['cash', 'credit-card', 'internet-banking'],
+            default: 'cash'
         },
         product_id: {
             type: Schema.Types.ObjectId,
@@ -21,8 +25,8 @@ const paymentSchema = new Schema(
         },
         payment_status: {
             type: String,
-            enum: ['paid', 'on-payment', 'failed'],
-            default: 'on-payment'
+            enum: ['paid', 'pending', 'failed'],
+            default: 'pending'
         }
     },
     {
