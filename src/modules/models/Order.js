@@ -19,6 +19,11 @@ const orderSchema = new Schema (
             type: Schema.Types.ObjectId,
             ref: "Product"
         },
+        order_status: {
+            type: String,
+            enum: ['pending','taken','delivered'],
+            default: 'pending'
+        }
     },
     {
         timestamps: true

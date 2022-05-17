@@ -38,6 +38,7 @@ module.exports = {
                 order_qty: orderQty,
                 buyer_id: req.decodeToken._id,
                 product_id: productId,
+                order_status: 'pending'
             })
             const result = await newOrder.save()
             return helper.response(res, 200, 'A new order is succesfully created!, Please wait until our staff processing your order!', result)
