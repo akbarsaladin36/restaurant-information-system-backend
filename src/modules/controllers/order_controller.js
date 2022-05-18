@@ -1,5 +1,6 @@
 const helper = require('../../helpers/helper')
 const orderModel = require('../models/Order')
+const productModel = require('../models/Product')
 
 module.exports = {
     allOrder: async (req, res) => {
@@ -31,11 +32,17 @@ module.exports = {
     },
     createOrder: async (req, res) => {
         try {
+            const { productId } = req.params
             const { orderDesc, orderQty } = req.body
-            const { productId } = req.query
+            const checkProduct = await productModel.findOne({ _id: productId })
+            if(!checkProduct) {
+                return helper.response(res, 400, `An order cannot be created because the product id ${productId} data is not found!`, null)
+            }
+            const totalOrderAmount = orderQty * checkProduct.product_price
             const newOrder = new orderModel({
                 order_desc: orderDesc,
                 order_qty: orderQty,
+                order_amount: totalOrderAmount,
                 buyer_id: req.decodeToken._id,
                 product_id: productId,
                 order_status: 'pending'

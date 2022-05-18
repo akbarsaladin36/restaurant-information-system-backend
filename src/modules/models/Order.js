@@ -11,6 +11,10 @@ const orderSchema = new Schema (
             type: Number,
             required: true
         },
+        order_amount : {
+            type: Number,
+            required: true
+        },
         buyer_id: {
             type: Schema.Types.ObjectId,
             ref: "User"
