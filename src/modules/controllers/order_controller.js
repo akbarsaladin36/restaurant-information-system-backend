@@ -6,10 +6,63 @@ module.exports = {
     allOrder: async (req, res) => {
         try {
             const result = await orderModel.find()
-            if(!result) {
+            if(!result.length) {
                 return helper.response(res, 400, 'all orders is still empty. Please wait until a buyer order the product!', null)
             } else {
                 return helper.response(res, 200, 'all orders is successfully appeared!', result)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
+    allOrderByBuyer: async (req, res) => {
+        try {
+            const userId = req.decodeToken._id
+            const result = await orderModel.find({ buyer_id: userId })
+            if(!result.length) {
+                return helper.response(res, 400, `all orders for buyer id ${userId} is not found!`, null)
+            } else {
+                return helper.response(res, 200, `all orders for buyer id ${userId} is succesfully appeared!`, result)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
+    allPendingOrder: async (req, res) => {
+        try {
+            const result = await orderModel.find({ order_status: 'pending' })
+            if(!result.length) {
+                return helper.response(res, 400, 'all pending order is not found. Please create a new order!', null)
+            } else {
+                return helper.response(res, 200, 'All pending order is succesfully appeared!', result)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
+    allTakenOrder: async (req, res) => {
+        try {
+            const result = await orderModel.find({ order_status: 'taken' })
+            if(!result.length) {
+                return helper.response(res, 400, 'all taken order is not found. Please create a new order!', null)
+            } else {
+                return helper.response(res, 200, 'All taken order is succesfully appeared!', result)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
+    allDeliveredOrder: async (req, res) => {
+        try {
+            const result = await orderModel.find({ order_status: 'delivered' })
+            if(!result.length) {
+                return helper.response(res, 400, 'all delivered order is not found. Please create a new order!', null)
+            } else {
+                return helper.response(res, 200, 'All delivered order is succesfully appeared!', result)
             }
         } catch (err) {
             console.log(err)

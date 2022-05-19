@@ -7,7 +7,7 @@ module.exports = {
     allUsers: async (req, res) => {
         try {
             const result = await usersModel.find()
-            if(!result) {
+            if(!result.length) {
                 return helper.response(res, 400, 'No users that registered in this website. Please make sure your user is registered!', null)
             } else {
                 return helper.response(res, 200, 'All users is showed successfully', result)

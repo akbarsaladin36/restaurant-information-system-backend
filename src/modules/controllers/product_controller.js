@@ -5,7 +5,7 @@ module.exports = {
     allProduct: async (req, res) => {
         try {
             const result = await productModel.find()
-            if(!result) {
+            if(!result.length) {
                 return helper.response(res, 400, 'All product is not displayed in restaurant menu. Please create a new one!', null)
             } else {
                 return helper.response(res, 200, 'All product in restaurant menu is successfully appeared!', result)

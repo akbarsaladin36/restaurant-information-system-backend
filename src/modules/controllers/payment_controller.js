@@ -6,7 +6,7 @@ module.exports = {
     allPayment: async (req, res) => {
         try {
             const result = await paymentModel.find()
-            if(!result) {
+            if(!result.length) {
                 return helper.response(res, 400, 'all payments data is not found. Please create a first payment if you have visitor!',null)
             } else {
                 return helper.response(res, 200, 'all payments is succesfully appeared!', result)
