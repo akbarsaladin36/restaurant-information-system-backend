@@ -10,7 +10,9 @@ router.get('/all-order/taken', authMiddleware.userAuthentication, orderControlle
 router.get('/all-order/delivered', authMiddleware.userAuthentication, orderController.allDeliveredOrder)
 router.get('/:id', authMiddleware.userAuthentication, orderController.oneOrder)
 router.post('/create/:productId', authMiddleware.userAuthentication, orderController.createOrder)
-router.patch('/:id', authMiddleware.userAuthentication, orderController.updateOrder)
-router.delete('/:id', authMiddleware.userAuthentication, orderController.deleteOrder)
+router.patch('/:id/taken', authMiddleware.userAuthentication, authMiddleware.isStaff, orderController.verifyOrderToTaken)
+router.patch('/:id/delivered', authMiddleware.userAuthentication, authMiddleware.isStaff, orderController.verifyOrderToDelivered)
+router.patch('/:id', authMiddleware.userAuthentication, authMiddleware.isAdmin, orderController.updateOrder)
+router.delete('/:id', authMiddleware.userAuthentication, authMiddleware.isAdmin, orderController.deleteOrder)
 
 module.exports = router

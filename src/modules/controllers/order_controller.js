@@ -107,6 +107,42 @@ module.exports = {
             return helper.response(res, 404, 'Bad Request', null)
         }
     },
+    verifyOrderToTaken: async (req, res) => {
+        try {
+            const { id } = req.params
+            const checkOrder = await orderModel.findOne({ _id: id })
+            if(!checkOrder) {
+                return helper.response(res, 400, `The order data with id ${id} is not found. Please try again!`, null)
+            } else {
+                const setData = {
+                    order_status: 'taken'
+                }
+                const result = await orderModel.findByIdAndUpdate({ _id: id }, setData)
+                return helper.response(res, 200, `The order data with id ${id} is succesfully taken by our chef. Please wait until our staff send your order!`, result)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
+    verifyOrderToDelivered: async (req, res) => {
+        try {
+            const { id } = req.params
+            const checkOrder = await orderModel.findOne({ _id: id })
+            if(!checkOrder) {
+                return helper.response(res, 400, `The order data with id ${id} is not found. Please try again!`, null)
+            } else {
+                const setData = {
+                    order_status: 'delivered'
+                }
+                const result = await orderModel.findByIdAndUpdate({ _id: id }, setData)
+                return helper.response(res, 200, `The order data with id ${id} is succesfully delivered by our staff!`, result)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
     updateOrder: async (req, res) => {
         try {
             const { id } = req.params
