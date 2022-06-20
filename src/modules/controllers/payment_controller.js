@@ -5,7 +5,26 @@ const paymentModel = require('../models/Payment')
 module.exports = {
     allPayment: async (req, res) => {
         try {
-            const result = await paymentModel.find()
+            const result = await paymentModel.aggregate([
+                { 
+                $lookup:
+                   {
+                     from: 'products',
+                     localField: 'product_id',
+                     foreignField: '_id',
+                     as: 'product_detail'
+                   },
+                },
+                {
+                $lookup:
+                    {
+                      from: 'users',
+                      localField: 'user_id',
+                      foreignField: '_id',
+                      as: 'user_detail'
+                    },
+                }
+            ])
             if(!result.length) {
                 return helper.response(res, 400, 'all payments data is not found. Please create a first payment if you have visitor!',null)
             } else {

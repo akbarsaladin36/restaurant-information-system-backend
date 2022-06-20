@@ -47,6 +47,7 @@ JWT_EXPIRESTIME = <YOUR JWT EXPIRES TIME>
 3. CRUD Product API
 4. CRUD Order API
 5. CRUD Payment API
+6. CRUD Message API
 
 ## License
 
