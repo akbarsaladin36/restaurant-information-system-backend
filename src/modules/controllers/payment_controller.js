@@ -35,6 +35,20 @@ module.exports = {
             return helper.response(res, 404, 'Bad Request', null)
         }
     },
+    myPayment: async (req, res) => {
+        try {
+            const userId = req.decodeToken._id
+            const result = await paymentModel.find({ user_id: userId })
+            if(!result) {
+                return helper.response(res, 400, 'All your payment data is empty! Please create a new payment!', null)
+            } else {
+                return helper.response(res, 200, 'All your payment data is succesfully appeared!', result)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
     onePayment: async (req, res) => {
         try {
             const { id } = req.params
@@ -51,8 +65,8 @@ module.exports = {
     },
     createPayment: async (req, res) => {
         try {
-            const { productId } = req.params
-            const { paymentAmount, paymentDesc, paymentType } = req.body
+            // const { productId } = req.params
+            const { productId, paymentAmount, paymentDesc, paymentType } = req.body
             const checkProduct = await productModel.findOne({ _id: productId })
             if(!checkProduct) {
                 return helper.response(res, 400, `A payment is not created because a product with id ${productId} is not found!`, null)
