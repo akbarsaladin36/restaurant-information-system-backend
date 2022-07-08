@@ -1,4 +1,5 @@
 const helper = require('../../helpers/helper')
+const mongoose = require('mongoose')
 const productModel = require('../models/Product')
 const paymentModel = require('../models/Payment')
 
@@ -38,7 +39,31 @@ module.exports = {
     myPayment: async (req, res) => {
         try {
             const userId = req.decodeToken._id
-            const result = await paymentModel.find({ user_id: userId })
+            const checkUserId = mongoose.Types.ObjectId(userId)
+            // const result = await paymentModel.find({ user_id: userId })
+            const result = await paymentModel.aggregate([
+                {
+                    $match: { user_id: checkUserId }
+                },
+                { 
+                $lookup:
+                   {
+                     from: 'products',
+                     localField: 'product_id',
+                     foreignField: '_id',
+                     as: 'product_detail'
+                   },
+                },
+                {
+                $lookup:
+                    {
+                      from: 'users',
+                      localField: 'user_id',
+                      foreignField: '_id',
+                      as: 'user_detail'
+                    },
+                }
+            ])
             if(!result) {
                 return helper.response(res, 400, 'All your payment data is empty! Please create a new payment!', null)
             } else {
