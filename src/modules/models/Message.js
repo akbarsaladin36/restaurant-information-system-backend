@@ -11,11 +11,11 @@ const messageSchema = new Schema (
             type: String,
             required: true
         },
-        sender_address: {
+        sender_id: {
             type: String,
             required: true
         },
-        receiver_address: {
+        receiver_id: {
             type: String,
             required: true
         },

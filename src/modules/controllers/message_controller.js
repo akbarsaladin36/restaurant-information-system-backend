@@ -15,6 +15,20 @@ module.exports = {
             return helper.response(res, 404, 'Bad Request', null)
         }
     },
+    ownMessage: async (req, res) => {
+        try {
+            const userId = req.decodeToken._id
+            const result = await messageModel.find({ receiver_id: userId })
+            if(!result) {
+                return helper.response(res, 400, `All messages for buyer id ${userId} is empty!`, null)
+            } else {
+                return helper.response(res, 200, `All messages for buyer id ${userId} is succesfully appeared!`, result)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
     oneMessage: async (req, res) => {
         try {
             const { id } = req.params
@@ -31,16 +45,16 @@ module.exports = {
     },
     createMessage: async (req, res) => {
         try {
-            const { messageTitle, messageDesc, receiverAddress } = req.body
+            const { messageTitle, messageDesc, receiverId } = req.body
             const newMessage = new messageModel({
                 message_title: messageTitle,
                 message_desc: messageDesc,
-                sender_address: req.decodeToken.email,
-                receiver_address: receiverAddress,
+                sender_id: req.decodeToken._id,
+                receiver_id: receiverId,
                 message_status: 'sent'
             })
             const result = await newMessage.save()
-            return helper.response(res, 200, `Your message has been sent to ${receiverAddress}!`, result)
+            return helper.response(res, 200, `Your message has been sent to ${receiverId}!`, result)
         } catch (err) {
             console.log(err)
             return helper.response(res, 404, 'Bad Request', null)
