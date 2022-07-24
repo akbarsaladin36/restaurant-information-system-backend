@@ -43,6 +43,19 @@ module.exports = {
             return helper.response(res, 404, 'Bad Request', null)
         }
     },
+    allUsersByAdminAndUser: async(req, res) => {
+        try {
+            const result = await usersModel.find({ roles: ['admin', 'staff'] })
+            if(!result) {
+                return helper.response(res, 400, 'No admin and staff that registered in this website, Please make sure your worker is registered!', null)
+            } else {
+                return helper.response(res, 200, 'All workers is succesfully showed', result)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
     oneUser: async (req, res) => {
         try {
             const { id } = req.params
