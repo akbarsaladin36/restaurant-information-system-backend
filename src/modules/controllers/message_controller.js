@@ -50,6 +50,7 @@ module.exports = {
                 message_title: messageTitle,
                 message_desc: messageDesc,
                 sender_id: req.decodeToken._id,
+                sender_role: req.decodeToken.roles,
                 receiver_id: receiverId,
                 message_status: 'sent'
             })

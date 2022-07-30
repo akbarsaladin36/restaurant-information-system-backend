@@ -15,6 +15,10 @@ const messageSchema = new Schema (
             type: String,
             required: true
         },
+        sender_role: {
+            type: String,
+            required: true
+        },
         receiver_id: {
             type: String,
             required: true
